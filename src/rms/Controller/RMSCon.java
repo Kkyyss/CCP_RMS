@@ -57,8 +57,6 @@ public class RMSCon implements Initializable {
     @FXML
     private AnchorPane mainPane;
     @FXML
-    private JFXButton setButton;
-    @FXML
     private Label currentNumberOfCustomerLabel;
     @FXML
     private Label drinkingTimeLabel;
@@ -76,6 +74,24 @@ public class RMSCon implements Initializable {
     private JFXTextField replaceGlassTimeTF;
     @FXML
     private JFXTextField replaceCupTimeTF;
+    @FXML
+    private JFXButton setCustomerButton;
+    @FXML
+    private JFXButton setAssistantButton;
+    @FXML
+    private JFXButton setCupboardButton;
+    @FXML
+    private JFXTextField fetchGlassTimeTF;
+    @FXML
+    private JFXTextField fetchCupTimeTF;
+    @FXML
+    private JFXTextField fetchChocolateTimeTF;
+    @FXML
+    private JFXTextField fetchCoffeeTimeTF;
+    @FXML
+    private JFXTextField fetchMilkTimeTF;
+    @FXML
+    private JFXTextField fetchJuiceTimeTF;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -101,6 +117,12 @@ public class RMSCon implements Initializable {
         // Cupboard
         replaceGlassTimeTF.setText(Integer.toString(conf.getTimeReplaceGlass()));
         replaceCupTimeTF.setText(Integer.toString(conf.getTimeReplaceCup()));
+        fetchGlassTimeTF.setText(Integer.toString(conf.getTimeFetchGlass()));
+        fetchCupTimeTF.setText(Integer.toString(conf.getTimeFetchCup()));
+        fetchChocolateTimeTF.setText(Integer.toString(conf.getTimeFetchChocolate()));
+        fetchMilkTimeTF.setText(Integer.toString(conf.getTimeFetchMilk()));
+        fetchJuiceTimeTF.setText(Integer.toString(conf.getTimeFetchJuice()));
+        fetchCoffeeTimeTF.setText(Integer.toString(conf.getTimeFetchCoffee()));
     }
     
     private void initStat() {
@@ -212,7 +234,7 @@ public class RMSCon implements Initializable {
     }
 
     @FXML
-    private void setOnClick(ActionEvent event) {
+    private void setCustomerOnClick(ActionEvent event) {
         // Customer
         if (isValidInt(numOfCustomerTF.getText())) {
             int value = Integer.parseInt(numOfCustomerTF.getText());
@@ -224,8 +246,11 @@ public class RMSCon implements Initializable {
             int value = Integer.parseInt(drinkingTimeTF.getText());
             
             conf.setdrinkingTime(value);
-        }
-        
+        }        
+    }
+
+    @FXML
+    private void setAssistantOnClick(ActionEvent event) {
         // Assistant
         if (isValidInt(washGlassTimeTF.getText())) {
             int value = Integer.parseInt(washGlassTimeTF.getText());
@@ -241,8 +266,11 @@ public class RMSCon implements Initializable {
             int value = Integer.parseInt(washRoundsTimeTF.getText());
             
             conf.setWashRoundsTime(value);
-        }
-        
+        }        
+    }
+
+    @FXML
+    private void setCupboardOnClick(ActionEvent event) {
         // Cupboard
         if (isValidInt(replaceGlassTimeTF.getText())) {
             int value = Integer.parseInt(replaceGlassTimeTF.getText());
@@ -251,6 +279,36 @@ public class RMSCon implements Initializable {
         }
         if (isValidInt(replaceCupTimeTF.getText())) {
             int value = Integer.parseInt(replaceCupTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchGlassTimeTF.getText())) {
+            int value = Integer.parseInt(fetchGlassTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchCupTimeTF.getText())) {
+            int value = Integer.parseInt(fetchCupTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchChocolateTimeTF.getText())) {
+            int value = Integer.parseInt(fetchChocolateTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchMilkTimeTF.getText())) {
+            int value = Integer.parseInt(fetchMilkTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchJuiceTimeTF.getText())) {
+            int value = Integer.parseInt(fetchJuiceTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
+        }
+        if (isValidInt(fetchCoffeeTimeTF.getText())) {
+            int value = Integer.parseInt(fetchCoffeeTimeTF.getText());
             
             conf.setTimeReplaceCup(value);
         }

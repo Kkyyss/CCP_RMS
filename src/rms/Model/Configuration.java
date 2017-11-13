@@ -24,6 +24,8 @@ public class Configuration {
     private AtomicInteger timeReplaceCup = new AtomicInteger(0);
     private AtomicInteger timeFetchCoffee = new AtomicInteger(0);
     private AtomicInteger timeFetchMilk = new AtomicInteger(0);
+    private AtomicInteger timeFetchChocolate = new AtomicInteger(0);
+    private AtomicInteger timeFetchJuice = new AtomicInteger(0);
     
     // Number of customer entering, drinking time and number of drinks, drinking type
     private AtomicInteger numberOfCustomerEntering = new AtomicInteger(0);
@@ -139,6 +141,14 @@ public class Configuration {
 
     public int getTimeReplaceCup() {
         return timeReplaceCup.get();
+    }
+
+    public int getTimeFetchChocolate() {
+        return timeFetchChocolate.get();
+    }
+
+    public int getTimeFetchJuice() {
+        return timeFetchJuice.get();
     }
     
     public void setNumberOfCustomerEntering(int newNum) {
@@ -381,6 +391,24 @@ public class Configuration {
             }
         }
     }
-    
-    
+
+    public void setTimeFetchChocolate(int newNum) {
+        while (true) {
+            int existingNum = this.getTimeFetchChocolate();
+            if (this.timeFetchChocolate.
+                    compareAndSet(existingNum, newNum)) {
+                return;
+            }
+        }
+    }
+
+    public void setTimeFetchJuice(int newNum) {
+        while (true) {
+            int existingNum = this.getTimeFetchJuice();
+            if (this.timeFetchJuice.
+                    compareAndSet(existingNum, newNum)) {
+                return;
+            }
+        }
+    }
 }

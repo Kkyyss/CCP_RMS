@@ -73,10 +73,8 @@ public class CustomerConsumer implements Runnable {
             // Finally increment customer served.
             this.scp.addServed();
             log(this.name + " served " + this.scp.getServed() + " customer(s).");
-            // Fill in the tables (may occurs deadlock)
 
             log(customer.getName() + " finding table...");
-            // TimeUnit.SECONDS.sleep(1);
             Tables t = tables.get(0);
             // Add customer to the table.
             log(customer.getName() + " at table ");
