@@ -57,15 +57,25 @@ public class RMSCon implements Initializable {
     @FXML
     private AnchorPane mainPane;
     @FXML
-    private JFXTextField numOfCustomerTextField;
-    @FXML
     private JFXButton setButton;
     @FXML
     private Label currentNumberOfCustomerLabel;
     @FXML
-    private JFXTextField drinkingTimeTextField;
-    @FXML
     private Label drinkingTimeLabel;
+    @FXML
+    private JFXTextField numOfCustomerTF;
+    @FXML
+    private JFXTextField drinkingTimeTF;
+    @FXML
+    private JFXTextField washGlassTimeTF;
+    @FXML
+    private JFXTextField washCupTimeTF;
+    @FXML
+    private JFXTextField washRoundsTimeTF;
+    @FXML
+    private JFXTextField replaceGlassTimeTF;
+    @FXML
+    private JFXTextField replaceCupTimeTF;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -80,8 +90,17 @@ public class RMSCon implements Initializable {
     
     private void initPane() {
         // Customer
-        numOfCustomerTextField.setText(Integer.toString(conf.getNumberOfCustomerEntering()));
-        drinkingTimeTextField.setText(Integer.toString(conf.getDrinkingTime()));
+        numOfCustomerTF.setText(Integer.toString(conf.getNumberOfCustomerEntering()));
+        drinkingTimeTF.setText(Integer.toString(conf.getDrinkingTime()));
+        
+        // Assistant
+        washGlassTimeTF.setText(Integer.toString(conf.getWashGlassTime()));
+        washCupTimeTF.setText(Integer.toString(conf.getWashCupTime()));
+        washRoundsTimeTF.setText(Integer.toString(conf.getWashRoundsTime()));
+        
+        // Cupboard
+        replaceGlassTimeTF.setText(Integer.toString(conf.getTimeReplaceGlass()));
+        replaceCupTimeTF.setText(Integer.toString(conf.getTimeReplaceCup()));
     }
     
     private void initStat() {
@@ -193,17 +212,47 @@ public class RMSCon implements Initializable {
     }
 
     @FXML
-    private void setOnClick(ActionEvent event) { 
-        if (isValidInt(numOfCustomerTextField.getText())) {
-            int value = Integer.parseInt(numOfCustomerTextField.getText());
+    private void setOnClick(ActionEvent event) {
+        // Customer
+        if (isValidInt(numOfCustomerTF.getText())) {
+            int value = Integer.parseInt(numOfCustomerTF.getText());
             
             conf.setNumberOfCustomerEntering(value);
         }
         
-        if (isValidInt(drinkingTimeTextField.getText())) {
-            int value = Integer.parseInt(drinkingTimeTextField.getText());
+        if (isValidInt(drinkingTimeTF.getText())) {
+            int value = Integer.parseInt(drinkingTimeTF.getText());
             
             conf.setdrinkingTime(value);
+        }
+        
+        // Assistant
+        if (isValidInt(washGlassTimeTF.getText())) {
+            int value = Integer.parseInt(washGlassTimeTF.getText());
+            
+            conf.setWashGlassTime(value);
+        }
+        if (isValidInt(washCupTimeTF.getText())) {
+            int value = Integer.parseInt(washCupTimeTF.getText());
+            
+            conf.setWashCupTime(value);
+        }
+        if (isValidInt(washRoundsTimeTF.getText())) {
+            int value = Integer.parseInt(washRoundsTimeTF.getText());
+            
+            conf.setWashRoundsTime(value);
+        }
+        
+        // Cupboard
+        if (isValidInt(replaceGlassTimeTF.getText())) {
+            int value = Integer.parseInt(replaceGlassTimeTF.getText());
+            
+            conf.setTimeReplaceGlass(value);
+        }
+        if (isValidInt(replaceCupTimeTF.getText())) {
+            int value = Integer.parseInt(replaceCupTimeTF.getText());
+            
+            conf.setTimeReplaceCup(value);
         }
     }
 }

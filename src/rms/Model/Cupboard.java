@@ -68,27 +68,17 @@ public class Cupboard extends ServingArea {
         }
     } 
     
-    public void returnGlass(int seconds) {
+    public void returnGlass(int value) {
         lockGlass.lock();
-        try {
-            this.glass++;
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException ex) {
-            log(ex);
-        } finally {
-            lockGlass.unlock();
-        }
+        this.glass += value;
+        
+        lockGlass.unlock();
     }
     
-    public void returnCup(int seconds) {
+    public void returnCup(int value) {
         lockCups.lock();
-        try {
-            this.cup++;
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException ex) {
-            log(ex);
-        } finally {
-            lockCups.unlock();
-        }
+
+        this.cup += value;
+        lockCups.unlock();
     }
 }

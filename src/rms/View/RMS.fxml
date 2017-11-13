@@ -25,7 +25,7 @@
                         <JFXButton id="last_order_button" buttonType="RAISED" layoutX="14.0" layoutY="114.0" onAction="#lastOrderOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Last Order" />
                         <JFXButton id="stop_spawn_button" fx:id="playpauseCustomerButton" buttonType="RAISED" layoutX="14.0" layoutY="23.0" onAction="#stopSpawnCustomerOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Pause Customer" />
                         <JFXButton id="playpause_assistant_button" fx:id="playpauseAssistantButton" buttonType="RAISED" layoutX="14.0" layoutY="68.0" onAction="#playpauseAssistantOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Play Assistant" />
-                        <JFXTextField fx:id="numOfCustomerTextField" labelFloat="true" layoutX="204.0" layoutY="68.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Customer Entering">
+                        <JFXTextField fx:id="numOfCustomerTF" labelFloat="true" layoutX="204.0" layoutY="68.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Customer Entering">
                            <font>
                               <Font size="14.0" />
                            </font></JFXTextField>
@@ -35,7 +35,42 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="drinkingTimeTextField" labelFloat="true" layoutX="204.0" layoutY="118.0" prefHeight="28.0" prefWidth="199.0" promptText="Drinking Time (SECONDS)">
+                        <JFXTextField fx:id="drinkingTimeTF" labelFloat="true" layoutX="204.0" layoutY="118.0" prefHeight="28.0" prefWidth="199.0" promptText="Drinking Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="420.0" layoutY="24.0" prefHeight="27.0" prefWidth="101.0" text="ASSISTANT">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="washGlassTimeTF" labelFloat="true" layoutX="420.0" layoutY="68.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Glass Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="washCupTimeTF" labelFloat="true" layoutX="420.0" layoutY="118.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Cup Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="washRoundsTimeTF" labelFloat="true" layoutX="420.0" layoutY="165.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Rounds Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="631.0" layoutY="24.0" prefHeight="27.0" prefWidth="108.0" text="CUPBOARD">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="replaceGlassTimeTF" labelFloat="true" layoutX="631.0" layoutY="68.0" prefHeight="28.0" prefWidth="199.0" promptText="Replace Glass Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="replaceCupTimeTF" labelFloat="true" layoutX="631.0" layoutY="118.0" prefHeight="28.0" prefWidth="199.0" promptText="Replace Cup Time (SECONDS)">
                            <font>
                               <Font size="14.0" />
                            </font>

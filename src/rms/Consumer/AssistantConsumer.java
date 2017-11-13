@@ -5,10 +5,10 @@ package rms.Consumer;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import rms.Model.Assistant;
 import rms.Model.Customer;
 import rms.Model.Tables;
+import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.cupboard;
 import static rms.MyUtils.MyConfig.tableNumbers;
 import static rms.MyUtils.MyConfig.tables;
@@ -57,31 +57,35 @@ public class AssistantConsumer implements Runnable {
                         // Go to next tables if available.
                         TimeUnit.SECONDS.sleep(2);
                     }
-                    int totalCollected = cups + glasses;
                     // Washing
-                    log(this.name + " washing...");
-                    TimeUnit.SECONDS.sleep(totalCollected);
+                   log(this.name + 
+                            " washing...cups " + 
+                            conf.getWashCupTime() + " seconds and glasses " +
+                            conf.getWashGlassTime() + " seconds...");
+                    
+                    TimeUnit.SECONDS.sleep((cups * conf.getWashCupTime()) + 
+                            (glasses * conf.getWashGlassTime()));
 
                     // Replace
                     // Go to cupboard
                     log(this.name + " moving to cupboard.");
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(1);
 
-                    log(this.name + " replacing...");
-                    for (int i = 0; i < cups; i++) {
-                        cupboard.returnCup(1);
-                    }
-                    
-                    for (int i = 0; i < glasses; i++) {
-                        cupboard.returnGlass(1);
-                    }
+                    log(this.name + 
+                            " replacing...cups " + 
+                            conf.getTimeReplaceCup() + " seconds and glasses " +
+                            conf.getTimeReplaceGlass() + " seconds...");
+                    TimeUnit.SECONDS.sleep((cups * conf.getTimeReplaceCup()) + 
+                                                (glasses * conf.getTimeReplaceGlass()));
+                    cupboard.returnCup(cups);
+                    cupboard.returnGlass(glasses);
                     
                     cups = 0;
                     glasses = 0;
 
                     log(this.name + " completed collect-wash-replace cycle.");
-                    log(this.name + " taking rest for 20 seconds...");
-                    assistant.getRest(5);
+                    log(this.name + " taking rest for " + conf.getWashRoundsTime() + " seconds...");
+                    assistant.getRest(conf.getWashRoundsTime());
                 }
                 TimeUnit.SECONDS.sleep(1);
             }
