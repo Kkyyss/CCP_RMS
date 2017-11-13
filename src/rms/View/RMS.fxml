@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="mainPane" prefHeight="567.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rms.Controller.RMSCon">
+    <children>
+      <Label fx:id="time_label" alignment="CENTER" layoutX="369.0" layoutY="14.0" prefHeight="36.0" prefWidth="290.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <JFXTabPane layoutY="57.0" prefHeight="510.0" prefWidth="1027.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+         <tabs>
+            <Tab text="CONFIGURATION">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="468.0" prefWidth="1140.0">
+                     <children>
+                        <JFXButton id="last_order_button" buttonType="RAISED" layoutX="14.0" layoutY="114.0" onAction="#lastOrderOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Last Order" />
+                        <JFXButton id="stop_spawn_button" fx:id="playpauseCustomerButton" buttonType="RAISED" layoutX="14.0" layoutY="23.0" onAction="#stopSpawnCustomerOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Pause Customer" />
+                        <JFXButton id="playpause_assistant_button" fx:id="playpauseAssistantButton" buttonType="RAISED" layoutX="14.0" layoutY="68.0" onAction="#playpauseAssistantOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Play Assistant" />
+                        <JFXTextField fx:id="numOfCustomerTextField" labelFloat="true" layoutX="204.0" layoutY="68.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Customer Entering">
+                           <font>
+                              <Font size="14.0" />
+                           </font></JFXTextField>
+                        <JFXButton id="stop_spawn_button" fx:id="setButton" buttonType="RAISED" layoutX="871.0" layoutY="15.0" onAction="#setOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="SET" />
+                        <Label layoutX="205.0" layoutY="24.0" text="CUSTOMER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="drinkingTimeTextField" labelFloat="true" layoutX="204.0" layoutY="118.0" prefHeight="28.0" prefWidth="199.0" promptText="Drinking Time (SECONDS)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="CURRENT STAT">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="205.0" text="Number of Customer Entering ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="219.0" layoutY="14.0" prefHeight="27.0" prefWidth="19.0" text="-&gt;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="currentNumberOfCustomerLabel" layoutX="241.0" layoutY="18.0" prefWidth="0.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="41.0" prefHeight="27.0" prefWidth="203.0" text="Drinking Time (SECONDS)">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="219.0" layoutY="41.0" prefHeight="27.0" prefWidth="19.0" text="-&gt;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="drinkingTimeLabel" layoutX="241.0" layoutY="45.0" prefWidth="0.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="ACTIVITY LOGS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="1.0" prefHeight="27.0" prefWidth="464.0" text="Activity Logs">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea fx:id="log_area" editable="false" layoutX="14.0" layoutY="28.0" prefHeight="429.0" prefWidth="1001.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="SANITY CHECK">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton id="show_details_button" fx:id="showDetailsButton" buttonType="RAISED" layoutX="14.0" layoutY="35.0" onAction="#showDetailsOnClick" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightblue;" text="Show Details" />
+                        <Label alignment="CENTER" layoutX="282.0" layoutY="1.0" prefHeight="27.0" prefWidth="464.0" text="Sanity Check">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea fx:id="sanity_check_area" editable="false" layoutX="282.0" layoutY="35.0" prefHeight="424.0" prefWidth="464.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+    </children>
+</AnchorPane>
