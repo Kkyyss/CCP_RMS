@@ -13,6 +13,10 @@ public class Cupboard extends ServingArea {
     private final ReentrantLock lockCups = new ReentrantLock();
     private final ReentrantLock lockGlass = new ReentrantLock();
     private final ReentrantLock lockIngredients = new ReentrantLock();
+    private final ReentrantLock lockChocolate = new ReentrantLock();
+    private final ReentrantLock lockMilk = new ReentrantLock();
+    private final ReentrantLock lockCoffee = new ReentrantLock();
+    private final ReentrantLock lockMakeChocolate = new ReentrantLock();
     
     public Cupboard() {}
     
@@ -32,7 +36,7 @@ public class Cupboard extends ServingArea {
         return cup;
     }
     
-    public void getIngredientsAndMixDrinks(int seconds) {
+    public void mixDrinks(int seconds) {
         lockIngredients.lock();
         
         try {
@@ -41,6 +45,54 @@ public class Cupboard extends ServingArea {
             log(ex);
         } finally {
             lockIngredients.unlock();
+        }
+    }
+    
+    public void getMilk(int seconds) {
+        lockMilk.lock();
+        
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException ex) {
+            log(ex);
+        } finally {
+            lockMilk.unlock();
+        }
+    }
+    
+    public void getCoffee(int seconds) {
+        lockCoffee.lock();
+        
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException ex) {
+            log(ex);
+        } finally {
+            lockCoffee.unlock();
+        }
+    }    
+    
+    public void getChocolate(int seconds) {
+        lockChocolate.lock();
+        
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException ex) {
+            log(ex);
+        } finally {
+            lockChocolate.unlock();
+        }
+    }
+    
+    public void makeChocolate(int seconds) {
+        lockMakeChocolate.lock();
+        
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException ex) {
+            log(ex);
+        } finally {
+            lockMakeChocolate.unlock();
         }
     }
     

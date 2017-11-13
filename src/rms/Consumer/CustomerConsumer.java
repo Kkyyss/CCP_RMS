@@ -12,6 +12,7 @@ import rms.Model.Order;
 import rms.Model.ServeCustomerPosition;
 import rms.Model.Tables;
 import static rms.MyUtils.MyConfig.closingTimeNotify;
+import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.cupboard;
 import static rms.MyUtils.MyConfig.juiceFountainTap;
 import static rms.MyUtils.MyConfig.lastOrder;
@@ -87,39 +88,64 @@ public class CustomerConsumer implements Runnable {
     }
     
     private void fruitRoutine() {
-        log(this.name + " go cupboard obtain glass for 2 seconds");
+        log(this.name + " go cupboard obtain glass for " + conf.getTimeFetchGlass() + " seconds");
         while (cupboard.getGlass() <= 0) {
             // TODO waiting assistant return glasses
             log("No glass available...");
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(conf.getTimeFetchGlass());
             } catch (InterruptedException ex) {
                 errorLog(ex);
             }
         }
         cupboard.obtainGlass(2);
         log(this.name + " obtained the glass.");
-        log(this.name + " obtained the juice fountain tap.");
-        log(this.name + " get fill for 3 seconds.");
-        juiceFountainTap.getFill(3);
+        log(this.name + " obtained the juice fountain tap for " + conf.getTimeFetchJuice() + " seconds.");
+        juiceFountainTap.getFountainTap(conf.getTimeFetchJuice());
+        log(this.name + " get fill for " + conf.getMakeFruitJuiceTime() + " seconds.");
+        juiceFountainTap.getFill(conf.getMakeFruitJuiceTime());
         log(this.name + " complete filled.");
     }
     
     private void milkCoffeeRoutine() {
-        log(this.name + " go cupboard obtain cup for 2 seconds");
+        log(this.name + " go cupboard obtain cup for " + conf.getTimeFetchCup()+ " seconds");
         while (cupboard.getCup() <= 0) {
             // TODO waiting assistant return cups
             log("No cup available...");
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(conf.getTimeFetchCup());
             } catch (InterruptedException ex) {
                 errorLog(ex);
             }
         }
         cupboard.obtainCup(2);
         log(this.name + " obtained the cup.");
-        log(this.name + " obtained the ingredients and mix drinks for 3 seconds.");
-        cupboard.getIngredientsAndMixDrinks(3);
+        log(this.name + " obtained milk for " + conf.getTimeFetchMilk() + " seconds.");
+        cupboard.getMilk(conf.getTimeFetchMilk());
+        log(this.name + " obtained coffee for " + conf.getTimeFetchCoffee() + " seconds.");
+        cupboard.getCoffee(conf.getTimeFetchCoffee());
+        log(this.name + " obtained mix drinks for " + conf.getMakeCappuccinoTime() + " seconds.");
+        cupboard.mixDrinks(conf.getMakeCappuccinoTime());
         log(this.name + " complete mixed.");
     }
+    
+    private void chocolateRoutine() {
+        log(this.name + " go cupboard obtain cup for " + conf.getTimeFetchCup()+ " seconds");
+        while (cupboard.getCup() <= 0) {
+            // TODO waiting assistant return cups
+            log("No cup available...");
+            try {
+                TimeUnit.SECONDS.sleep(conf.getTimeFetchCup());
+            } catch (InterruptedException ex) {
+                errorLog(ex);
+            }
+        }
+        cupboard.obtainCup(2);
+        log(this.name + " obtained the cup.");
+        log(this.name + " obtained chocolate for " + conf.getMakeChocolateTime()+ " seconds.");
+        cupboard.getChocolate(conf.getTimeFetchChocolate());
+        log(this.name + " obtained the chocolate drinks for " + conf.getMakeChocolateTime()+ " seconds.");
+        cupboard.makeChocolate(conf.getMakeChocolateTime());
+        log(this.name + " complete.");
+    }    
 }

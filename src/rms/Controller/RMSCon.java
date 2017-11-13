@@ -92,6 +92,26 @@ public class RMSCon implements Initializable {
     private JFXTextField fetchMilkTimeTF;
     @FXML
     private JFXTextField fetchJuiceTimeTF;
+    @FXML
+    private JFXButton setLBButton;
+    @FXML
+    private JFXTextField makeChocoTF;
+    @FXML
+    private JFXTextField makeCoffeeTF;
+    @FXML
+    private JFXTextField makeJuiceTF;
+    @FXML
+    private JFXButton setTableButton;
+    @FXML
+    private JFXTextField tableCapacityTF;
+    @FXML
+    private JFXTextField putdownGlassTimeTF;
+    @FXML
+    private JFXTextField putdownCupTimeTF;
+    @FXML
+    private JFXTextField pickupGlassTimeTF;
+    @FXML
+    private JFXTextField pickupCupTimeTF;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -123,6 +143,18 @@ public class RMSCon implements Initializable {
         fetchMilkTimeTF.setText(Integer.toString(conf.getTimeFetchMilk()));
         fetchJuiceTimeTF.setText(Integer.toString(conf.getTimeFetchJuice()));
         fetchCoffeeTimeTF.setText(Integer.toString(conf.getTimeFetchCoffee()));
+        
+        // LB
+        makeChocoTF.setText(Integer.toString(conf.getMakeChocolateTime()));
+        makeCoffeeTF.setText(Integer.toString(conf.getMakeCappuccinoTime()));
+        makeJuiceTF.setText(Integer.toString(conf.getMakeFruitJuiceTime()));
+        
+        // Table
+        tableCapacityTF.setText(Integer.toString(conf.getTableCapacity()));
+        putdownGlassTimeTF.setText(Integer.toString(conf.getPutDownGlassTime()));
+        putdownCupTimeTF.setText(Integer.toString(conf.getPutDownCupTime()));
+        pickupGlassTimeTF.setText(Integer.toString(conf.getPickUpGlassTime()));
+        pickupCupTimeTF.setText(Integer.toString(conf.getPickUpCupTime()));
     }
     
     private void initStat() {
@@ -285,32 +317,82 @@ public class RMSCon implements Initializable {
         if (isValidInt(fetchGlassTimeTF.getText())) {
             int value = Integer.parseInt(fetchGlassTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchGlass(value);
         }
         if (isValidInt(fetchCupTimeTF.getText())) {
             int value = Integer.parseInt(fetchCupTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchCup(value);
         }
         if (isValidInt(fetchChocolateTimeTF.getText())) {
             int value = Integer.parseInt(fetchChocolateTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchChocolate(value);
         }
         if (isValidInt(fetchMilkTimeTF.getText())) {
             int value = Integer.parseInt(fetchMilkTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchMilk(value);
         }
         if (isValidInt(fetchJuiceTimeTF.getText())) {
             int value = Integer.parseInt(fetchJuiceTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchJuice(value);
         }
         if (isValidInt(fetchCoffeeTimeTF.getText())) {
             int value = Integer.parseInt(fetchCoffeeTimeTF.getText());
             
-            conf.setTimeReplaceCup(value);
+            conf.setTimeFetchCoffee(value);
+        }
+    }
+
+    @FXML
+    private void setLBOnClick(ActionEvent event) {
+        // Landlord/barmaid
+        if (isValidInt(makeChocoTF.getText())) {
+            int value = Integer.parseInt(makeChocoTF.getText());
+            
+            conf.setMakeChocolateTime(value);
+        }
+        if (isValidInt(makeCoffeeTF.getText())) {
+            int value = Integer.parseInt(makeCoffeeTF.getText());
+            
+            conf.setMakeCappuccinoTime(value);
+        }
+        if (isValidInt(makeJuiceTF.getText())) {
+            int value = Integer.parseInt(makeJuiceTF.getText());
+            
+            conf.setMakeFruitJuiceTime(value);
+        }        
+    }
+
+    @FXML
+    private void setTableOnClick(ActionEvent event) {
+        // Table
+        if (isValidInt(tableCapacityTF.getText())) {
+            int value = Integer.parseInt(tableCapacityTF.getText());
+            
+            conf.setTableCapacity(value);
+        }
+        if (isValidInt(putdownGlassTimeTF.getText())) {
+            int value = Integer.parseInt(putdownGlassTimeTF.getText());
+            
+            conf.setPutDownGlassTime(value);
+        } 
+        if (isValidInt(putdownCupTimeTF.getText())) {
+            int value = Integer.parseInt(putdownCupTimeTF.getText());
+            
+            conf.setPutDownCupTime(value);
+        } 
+        if (isValidInt(pickupGlassTimeTF.getText())) {
+            int value = Integer.parseInt(pickupGlassTimeTF.getText());
+            
+            conf.setPickUpGlassTime(value);
+        } 
+        if (isValidInt(pickupCupTimeTF.getText())) {
+            int value = Integer.parseInt(pickupCupTimeTF.getText());
+            
+            conf.setPickUpCupTime(value);
         }
     }
 }

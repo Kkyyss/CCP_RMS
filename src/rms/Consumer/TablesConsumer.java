@@ -30,10 +30,17 @@ public class TablesConsumer implements Runnable {
                 Customer customer = tableCustomers.take();
                 new Thread(() -> {
                     try {
-                        int drinkingTime = conf.getDrinkingTime();
-                        log(customer.getName() + " drinking " + customer.getOrder() + " for " + drinkingTime + " seconds...");
-                        TimeUnit.SECONDS.sleep(drinkingTime);
                         boolean isFruitJuice = customer.getOrder() == Order.Beverage.FRUIT_JUICE;
+                        
+                        // Customer pick up glass/cup
+                        log(customer.getName() + " pick up " + 
+                                ((isFruitJuice) ? "glass" : "cup") + " for " + 
+                                ((isFruitJuice) ? conf.getPickUpGlassTime() : conf.getPickUpCupTime()) + " seconds...");
+                        TimeUnit.SECONDS.sleep(((isFruitJuice) ? conf.getPickUpGlassTime() : conf.getPickUpCupTime()));
+         
+                        log(customer.getName() + " drinking " + customer.getOrder() + " for " + conf.getDrinkingTime() + " seconds...");
+                        TimeUnit.SECONDS.sleep(conf.getDrinkingTime());
+                        
                         
                         // Increment cup or glass for that table.
                         int unit = (isFruitJuice) ? 1 : 2;
@@ -47,7 +54,10 @@ public class TablesConsumer implements Runnable {
                                     t.minusUnit(2);
                                     t.incrementCups();
                                 }
-                                log(customer.getName() + " put down " + ((isFruitJuice) ? "glass" : "cup"));
+                                log(customer.getName() + " put down " + 
+                                        ((isFruitJuice) ? "glass" : "cup") + " for " +
+                                        ((isFruitJuice) ? conf.getPutDownGlassTime(): conf.getPutDownCupTime()) + " seconds...");
+                                TimeUnit.SECONDS.sleep(((isFruitJuice) ? conf.getPutDownGlassTime(): conf.getPutDownCupTime()));
                                 break;
                             }
                             log(customer.getName() + " waiting to put down the " + ((isFruitJuice) ? "glass" : "cup"));
