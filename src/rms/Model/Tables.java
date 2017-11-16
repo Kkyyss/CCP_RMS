@@ -3,15 +3,16 @@
  */
 package rms.Model;
 
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 import static rms.MyUtils.MyUtils.errorLog;
 
 public class Tables {
+    public static ArrayList<Tables> tables = new ArrayList<Tables>();
     // private final ReentrantLock lock = new ReentrantLock();
-    private AtomicInteger unit = new AtomicInteger(3);
+    private AtomicInteger unit = new AtomicInteger(0);
     private AtomicInteger glasses = new AtomicInteger(0);
     private AtomicInteger cups = new AtomicInteger(0);
 
@@ -20,8 +21,13 @@ public class Tables {
     
     public Tables() {}
 
-    public void setUnit(AtomicInteger unit) {
-        this.unit = unit;
+    public void setUnit(int newUnit) {
+        while (true) {
+            int existingUnit = this.getUnit();
+            if (this.unit.compareAndSet(existingUnit , newUnit)) {
+                return;
+            }
+        }
     }
 
     public int getUnit() {

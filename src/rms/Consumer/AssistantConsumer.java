@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 import rms.Model.Assistant;
 import rms.Model.Customer;
 import rms.Model.Tables;
+import static rms.Model.Tables.tables;
 import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.cupboard;
-import static rms.MyUtils.MyConfig.tableNumbers;
-import static rms.MyUtils.MyConfig.tables;
+import static rms.MyUtils.MyUtils.errorLog;
 import static rms.MyUtils.MyUtils.log;
 
 public class AssistantConsumer implements Runnable {
@@ -35,13 +35,15 @@ public class AssistantConsumer implements Runnable {
                 if (!assistant.isIdle()) {
                     // Collecting...
                     log(this.name + " collecting...");
-                    for (int i = 0; i < tableNumbers; i++) {
+                    for (int i = 0; i < conf.getNumberOfTables(); i++) {
                         Tables t = tables.get(i);
 
                         // Collect glasses
                         for (int j = 0; j < t.getGlasses(); j++) {
                             glasses++;
-                            t.addUnit(1);
+                            if ((t.getUnit() + 1) < conf.getTableCapacity()) {
+                                t.addUnit(1);
+                            }
                             t.decrementGlasses();
                             // Collect for 1 seconds
                             TimeUnit.SECONDS.sleep(1);
@@ -49,7 +51,9 @@ public class AssistantConsumer implements Runnable {
                         // Collect cups
                         for (int j = 0; j < t.getCups(); j++) {
                             cups++;
-                            t.addUnit(2);
+                            if ((t.getUnit()) + 2 < conf.getTableCapacity()) {
+                                t.addUnit(2);
+                            }
                             t.decrementCups();
                             // Collect for 1 seconds
                             TimeUnit.SECONDS.sleep(1);
@@ -90,7 +94,7 @@ public class AssistantConsumer implements Runnable {
                 TimeUnit.SECONDS.sleep(1);
             }
         } catch (InterruptedException ex) {
-            log(ex);
+            errorLog(ex);
         }    
     }
     

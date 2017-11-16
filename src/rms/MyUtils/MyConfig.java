@@ -20,7 +20,6 @@ public class MyConfig {
     public static boolean isFilling = false;
 
     // Closing time...
-    public static boolean lastOrder = false;
     public static boolean closingTimeNotify = false;
     public static boolean isClosingTime = false;
     
@@ -38,10 +37,6 @@ public class MyConfig {
     // Cupboard
     public static Cupboard cupboard = new Cupboard();
     public static JuiceFountainTap juiceFountainTap = new JuiceFountainTap();
-    
-    // Tables
-    public static int tableNumbers = 5;
-    public static ArrayList<Tables> tables = new ArrayList<Tables>();
     
     // Logs
     public static ArrayList<String> myTimeLog = new ArrayList<String>();

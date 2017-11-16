@@ -7,6 +7,7 @@ public class Order {
     public enum Beverage {
         FRUIT_JUICE,
         CAPPUCCINO,
+        CHOCOLATE,
     }
     
     public static String getBeverageValue(Beverage beverage) {
@@ -14,11 +15,14 @@ public class Order {
             case CAPPUCCINO:
                 return "CAPPUCCINO";
                 
+            case CHOCOLATE:
+                return "CHOCOLATE";
+                
             case FRUIT_JUICE:
                 return "FRUIT JUICE";
             
             default:
-                return "NO ORDER! PLS FIXED IT!";
+                return "NO SUCH ORDER! PLS FIXED IT!";
         }
     }
 }

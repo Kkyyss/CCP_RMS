@@ -26,16 +26,14 @@ import static rms.Model.Assistant.assistant;
 import static rms.Model.Barmaid.barmaid;
 import static rms.Model.Landlord.landlord;
 import rms.Model.Tables;
+import static rms.Model.Tables.tables;
 
 import static rms.MyUtils.MyConfig.closingTimeNotify;
 import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.cupboard;
 import static rms.MyUtils.MyConfig.customerPauseSpawn;
-import static rms.MyUtils.MyConfig.lastOrder;
 import static rms.MyUtils.MyConfig.mySanityLog;
 import static rms.MyUtils.MyConfig.myTimeLog;
-import static rms.MyUtils.MyConfig.tableNumbers;
-import static rms.MyUtils.MyConfig.tables;
 import static rms.MyUtils.MyUtils.isValidInt;
 import static rms.MyUtils.MyUtils.log;
 import static rms.MyUtils.MyUtils.sanityLog;
@@ -112,6 +110,16 @@ public class RMSCon implements Initializable {
     private JFXTextField pickupGlassTimeTF;
     @FXML
     private JFXTextField pickupCupTimeTF;
+    @FXML
+    private JFXTextField chocoRatioTF;
+    @FXML
+    private JFXTextField cappucinoRatioTF;
+    @FXML
+    private JFXTextField juiceRatioTF;
+    @FXML
+    private JFXTextField TableNumbersTimeTF;
+    @FXML
+    private JFXButton setRestaurantButton;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -125,9 +133,15 @@ public class RMSCon implements Initializable {
     private int prev_sanity_loc = 0;
     
     private void initPane() {
+        // Restaurant
+        TableNumbersTimeTF.setText(Integer.toString(conf.getNumberOfTables()));
+        
         // Customer
         numOfCustomerTF.setText(Integer.toString(conf.getNumberOfCustomerEntering()));
         drinkingTimeTF.setText(Integer.toString(conf.getDrinkingTime()));
+        chocoRatioTF.setText(Integer.toString(conf.getChocolateType()));
+        cappucinoRatioTF.setText(Integer.toString(conf.getCappuccinoType()));
+        juiceRatioTF.setText(Integer.toString(conf.getJuiceType()));
         
         // Assistant
         washGlassTimeTF.setText(Integer.toString(conf.getWashGlassTime()));
@@ -229,7 +243,7 @@ public class RMSCon implements Initializable {
         sanityLog("Available cups: " + cupboard.getCup());
         sanityLog("Available glass: " + cupboard.getGlass());
         
-        for (int i = 0; i < tableNumbers; i++) {
+        for (int i = 0; i < conf.getNumberOfTables(); i++) {
             Tables t = tables.get(i);
             sanityLog("Table " + (i+1) + " unit: " + t.getUnit());
             sanityLog("Glass: " + t.getGlasses());
@@ -260,8 +274,8 @@ public class RMSCon implements Initializable {
 
     @FXML
     private void lastOrderOnClick(ActionEvent event) {
-        if (!lastOrder) {
-            lastOrder = true;
+        if (!conf.getLastOrder()) {
+            conf.setLastOrder(true);
         }
     }
 
@@ -273,12 +287,26 @@ public class RMSCon implements Initializable {
             
             conf.setNumberOfCustomerEntering(value);
         }
-        
         if (isValidInt(drinkingTimeTF.getText())) {
             int value = Integer.parseInt(drinkingTimeTF.getText());
             
-            conf.setdrinkingTime(value);
-        }        
+            conf.setDrinkingTime(value);
+        }
+        if (isValidInt(chocoRatioTF.getText())) {
+            int value = Integer.parseInt(chocoRatioTF.getText());
+            
+            conf.setChocolateType(value);
+        }
+        if (isValidInt(cappucinoRatioTF.getText())) {
+            int value = Integer.parseInt(cappucinoRatioTF.getText());
+            
+            conf.setCappuccinoType(value);
+        }
+        if (isValidInt(juiceRatioTF.getText())) {
+            int value = Integer.parseInt(juiceRatioTF.getText());
+            
+            conf.setJuiceType(value);
+        }
     }
 
     @FXML
@@ -373,6 +401,10 @@ public class RMSCon implements Initializable {
             int value = Integer.parseInt(tableCapacityTF.getText());
             
             conf.setTableCapacity(value);
+            for (int i = 0; i < tables.size(); i++) {
+                Tables t = tables.get(i);
+                t.setUnit(value);
+            }
         }
         if (isValidInt(putdownGlassTimeTF.getText())) {
             int value = Integer.parseInt(putdownGlassTimeTF.getText());
@@ -394,5 +426,15 @@ public class RMSCon implements Initializable {
             
             conf.setPickUpCupTime(value);
         }
+    }
+
+    @FXML
+    private void setRestaurantOnClick(ActionEvent event) {
+    
+        if (isValidInt(TableNumbersTimeTF.getText())) {
+            int value = Integer.parseInt(TableNumbersTimeTF.getText());
+            
+            conf.setNumberOfTables(value);
+        }            
     }
 }

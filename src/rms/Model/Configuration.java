@@ -1,19 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Configuration
  */
 package rms.Model;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- *
- * @author kys
- */
 public class Configuration {
     // Restaurant number of tables
-    private AtomicInteger numberOfTables = new AtomicInteger(0);
+    private AtomicInteger numberOfTables = new AtomicInteger(5);
     
     // Cupboard inital number of glass/cup, time to fetch/replace a glass/cup, time to fetch the different ingredients
     private AtomicInteger numberOfGlass = new AtomicInteger(0);
@@ -30,7 +25,9 @@ public class Configuration {
     // Number of customer entering, drinking time and number of drinks, drinking type
     private AtomicInteger numberOfCustomerEntering = new AtomicInteger(0);
     private AtomicInteger drinkingTime = new AtomicInteger(0);
-    private AtomicInteger drinkingType = new AtomicInteger(0);
+    private AtomicInteger chocolateType = new AtomicInteger(0);
+    private AtomicInteger cappuccinoType = new AtomicInteger(0);
+    private AtomicInteger juiceType = new AtomicInteger(0);
     
     // Landlord/Barmaid make drinks time
     private AtomicInteger makeChocolateTime = new AtomicInteger(0);
@@ -49,6 +46,9 @@ public class Configuration {
     private AtomicInteger pickUpGlassTime = new AtomicInteger(0);
     private AtomicInteger pickUpCupTime = new AtomicInteger(0);
     
+    // Clock
+    private AtomicBoolean lastOrder = new AtomicBoolean(false);
+    
     public Configuration() {}
     
     public int getNumberOfCustomerEntering() {
@@ -59,8 +59,16 @@ public class Configuration {
         return drinkingTime.get();
     }
 
-    public int getDrinkingType() {
-        return drinkingType.get();
+    public int getChocolateType() {
+        return chocolateType.get();
+    }
+
+    public int getCappuccinoType() {
+        return cappuccinoType.get();
+    }
+
+    public int getJuiceType() {
+        return juiceType.get();
     }
 
     public int getMakeCappuccinoTime() {
@@ -150,6 +158,10 @@ public class Configuration {
     public int getTimeFetchJuice() {
         return timeFetchJuice.get();
     }
+
+    public boolean getLastOrder() {
+        return lastOrder.get();
+    }
     
     public void setNumberOfCustomerEntering(int newNum) {
         while (true) {
@@ -172,7 +184,7 @@ public class Configuration {
         }
     }
     
-    public void setdrinkingTime(int newNum) {
+    public void setDrinkingTime(int newNum) {
         while (true) {
             int existingNum = this.getDrinkingTime();
             if (this.drinkingTime.
@@ -182,10 +194,30 @@ public class Configuration {
         }
     }
 
-    public void setDrinkingType(int newNum) {
+    public void setChocolateType(int newNum) {
         while (true) {
-            int existingNum = this.getDrinkingTime();
-            if (this.drinkingType.
+            int existingNum = this.getChocolateType();
+            if (this.chocolateType.
+                    compareAndSet(existingNum, newNum)) {
+                return;
+            }
+        }
+    }
+
+    public void setCappuccinoType(int newNum) {
+        while (true) {
+            int existingNum = this.getCappuccinoType();
+            if (this.cappuccinoType.
+                    compareAndSet(existingNum, newNum)) {
+                return;
+            }
+        }
+    }
+
+    public void setJuiceType(int newNum) {
+        while (true) {
+            int existingNum = this.getJuiceType();
+            if (this.juiceType.
                     compareAndSet(existingNum, newNum)) {
                 return;
             }
@@ -411,4 +443,16 @@ public class Configuration {
             }
         }
     }
+
+    public void setLastOrder(boolean newBool) {
+        while (true) {
+            boolean existingBool = this.getLastOrder();
+            if (this.lastOrder.
+                    compareAndSet(existingBool, newBool)) {
+                return;
+            }
+        }
+    }
+    
+    
 }

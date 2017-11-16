@@ -5,18 +5,18 @@
  */
 package rms.Consumer;
 
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import rms.Model.Customer;
 import rms.Model.Order;
 import rms.Model.ServeCustomerPosition;
 import rms.Model.Tables;
+import static rms.Model.Tables.tables;
 import static rms.MyUtils.MyConfig.closingTimeNotify;
 import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.cupboard;
 import static rms.MyUtils.MyConfig.juiceFountainTap;
-import static rms.MyUtils.MyConfig.lastOrder;
-import static rms.MyUtils.MyConfig.tables;
 import static rms.MyUtils.MyUtils.errorLog;
 import static rms.MyUtils.MyUtils.log;
 
@@ -26,6 +26,12 @@ public class CustomerConsumer implements Runnable {
     private String name;
     private BlockingQueue<Customer> customerQueue;
     private ServeCustomerPosition scp;
+    private Order.Beverage[] order = new Order.Beverage[] {
+        Order.Beverage.FRUIT_JUICE,
+        Order.Beverage.CAPPUCCINO,
+        Order.Beverage.CHOCOLATE,
+    };
+    private Random rand = new Random();
     
     public CustomerConsumer(String name, ServeCustomerPosition scp, BlockingQueue<Customer> customerQueue) {
         this.name = name;
@@ -41,7 +47,7 @@ public class CustomerConsumer implements Runnable {
                 serveCustomer();
             }
 
-            if (lastOrder && this.name == "Landlord") {
+            if (conf.getLastOrder() && this.name == "Landlord") {
                 log(this.name + " shout: LAST ORDER!!!");
                 serveCustomer();
                 break;
@@ -61,14 +67,22 @@ public class CustomerConsumer implements Runnable {
             // Pop customer FIFO
             Customer customer = customerQueue.take();
             log(this.name + " serve Customer " + customer.getName() + 
-                    ", order " + Order.getBeverageValue(customer.getOrder()));
+                    "...");
+     
+            // Customer Ordering...
+            log(customer.getName() + " ordering for 2 seconds...");
+            TimeUnit.SECONDS.sleep(2);
+            customer.setOrder(order[rand.nextInt(order.length)]);
+            log(customer.getName() + " order " + customer.getOrder());
 
             // Go to cupboard obtain items -- 2 seconds.
             boolean isFruitJuice = customer.getOrder() == Order.Beverage.FRUIT_JUICE;
             if (isFruitJuice) {
                 fruitRoutine();
-            } else {
+            } else if (customer.getOrder() == Order.Beverage.CAPPUCCINO) {
                 milkCoffeeRoutine();
+            } else {
+                chocolateRoutine();
             }
 
             // Finally increment customer served.
@@ -76,7 +90,7 @@ public class CustomerConsumer implements Runnable {
             log(this.name + " served " + this.scp.getServed() + " customer(s).");
 
             log(customer.getName() + " finding table...");
-            Tables t = tables.get(0);
+            Tables t = tables.get(rand.nextInt(tables.size()));
             // Add customer to the table.
             log(customer.getName() + " at table ");
             t.addCustomer(customer);

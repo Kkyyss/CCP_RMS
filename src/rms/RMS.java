@@ -4,7 +4,6 @@
 package rms;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,10 +17,10 @@ import static rms.Model.Barmaid.barmaid;
 import static rms.Model.Customer.customerQueue;
 import static rms.Model.Landlord.landlord;
 import rms.Model.Tables;
+import static rms.Model.Tables.tables;
+import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.customerExecutor;
 import static rms.MyUtils.MyConfig.staffExecutor;
-import static rms.MyUtils.MyConfig.tableNumbers;
-import static rms.MyUtils.MyConfig.tables;
 import static rms.MyUtils.MyConfig.tablesExecutor;
 import rms.Producer.CustomerProducer;
 
@@ -42,10 +41,11 @@ public class RMS extends Application {
         Thread barmaidThread = new Thread(new CustomerConsumer("Barmaid", barmaid, customerQueue));
         Thread assistantThread = new Thread(new AssistantConsumer("Assistant", assistant, customerQueue));
         staffExecutor = Executors.newFixedThreadPool(3);
-        tablesExecutor = Executors.newFixedThreadPool(tableNumbers);
+        tablesExecutor = Executors.newFixedThreadPool(conf.getNumberOfTables());
         customerExecutor = Executors.newFixedThreadPool(1);
         
-        for (int i = 0; i < tableNumbers; i++) {
+        for (int i = 0; i < conf.getNumberOfTables(); i++) {
+            Tables t = new Tables();
             tables.add(new Tables());
             tablesExecutor.execute(new Thread(new TablesConsumer("Tables" + (i + 1), tables.get(i))));
         }

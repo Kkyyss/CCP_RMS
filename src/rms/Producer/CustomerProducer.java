@@ -17,10 +17,19 @@ public class CustomerProducer implements Runnable {
     private String name;
     private long counter = 0;
     private BlockingQueue<Customer> customerQueue;
-    private Order.Beverage[] order = new Order.Beverage[] {
+    private Order.Beverage[] chocoCappuOrder = new Order.Beverage[] {
+        Order.Beverage.CAPPUCCINO,
+        Order.Beverage.CHOCOLATE,
+    };
+    private Order.Beverage[] chocoJuiceOrder = new Order.Beverage[] {
+        Order.Beverage.FRUIT_JUICE,
+        Order.Beverage.CHOCOLATE,
+    };
+    private Order.Beverage[] cappuJuiceOrder = new Order.Beverage[] {
         Order.Beverage.FRUIT_JUICE,
         Order.Beverage.CAPPUCCINO,
     };
+    
     private Random rand = new Random();
     
     public CustomerProducer(String name, BlockingQueue<Customer> customerQueue) {
@@ -35,13 +44,64 @@ public class CustomerProducer implements Runnable {
                 if (!closingTimeNotify && 
                         !customerPauseSpawn &&
                         conf.getNumberOfCustomerEntering() > 0) {
+                    int drinkType = 0;
                     Customer customer = new Customer();
                     customer.setName("C" + (counter + 1));
-                    customer.setOrder(order[rand.nextInt(2)]);
-                    customerQueue.put(customer);
+                    
+                    
+                    int chocoRatio = conf.getChocolateType();
+                    int cappucinoRatio = conf.getCappuccinoType();
+                    int juiceRatio = conf.getJuiceType();
+                    int totalRatio = chocoRatio + cappucinoRatio + juiceRatio;
+                    int percentage = (totalRatio > 0) ? rand.nextInt(chocoRatio + cappucinoRatio + juiceRatio) + 1 : 0;
+                    
+                    // Choco case
+                    if (chocoRatio != 0) {
+                        // Choco & cappu same percentage...
+                        if (chocoRatio <= percentage && cappucinoRatio == chocoRatio && percentage > juiceRatio) {
+                            drinkType = rand.nextInt(2);
+                            customer.setDrinkerType(chocoCappuOrder[drinkType]);
+                        }
+                        // Choco & juice same percentage...
+                        if (chocoRatio <= percentage && juiceRatio == chocoRatio && percentage > cappucinoRatio) {
+                            drinkType = rand.nextInt(2);
+                            customer.setDrinkerType(chocoJuiceOrder[drinkType]);
+                        }
+                        
+                        // Choco
+                        if (chocoRatio <= percentage && percentage > cappucinoRatio && percentage > juiceRatio) {
+                            customer.setDrinkerType(Order.Beverage.CHOCOLATE);
+                        }
+                    }
+                    
+                    // Juice case
+                    if (juiceRatio != 0) {
+                        // Juice
+                        if (juiceRatio <= percentage && percentage > chocoRatio && percentage > cappucinoRatio) {
+                            customer.setDrinkerType(Order.Beverage.FRUIT_JUICE);
+                        }
+                    }
+                    
+                    // Cappu case
+                    if (cappucinoRatio != 0) {
+                        // Cappu & juice same percentage...
+                        if (cappucinoRatio <= percentage && juiceRatio == cappucinoRatio && percentage > chocoRatio) {
+                            drinkType = rand.nextInt(2);
+                            customer.setDrinkerType(cappuJuiceOrder[drinkType]);
+                        }
+                        
+                        // Cappu
+                        if (cappucinoRatio <= percentage && percentage > chocoRatio && percentage > juiceRatio) {
+                            customer.setDrinkerType(Order.Beverage.CAPPUCCINO);
+                        }
+                    }                    
+                    
                     counter++;
                     conf.decrementNumberOfCustomerEntering();
-                    log(customer.getName() + " entered...");
+                    log(
+                            ((customer.getDrinkerType() != null) ? (customer.getDrinkerType()) : "Default") + 
+                                    " drinker " + customer.getName() + " entered...");
+                    customerQueue.put(customer);
                 }
                 TimeUnit.SECONDS.sleep(5);
             }

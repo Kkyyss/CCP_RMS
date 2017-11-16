@@ -29,69 +29,16 @@
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="971.0" />
                                 </content>
                               </Tab>
-                              <Tab text="LANDLORD/BARMAID">
+                              <Tab text="RESTAURANT">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton id="stop_spawn_button" fx:id="setLBButton" buttonType="RAISED" layoutX="14.0" layoutY="208.0" onAction="#setLBOnClick" prefHeight="35.0" prefWidth="229.0" style="-fx-background-color: lightblue;" text="SET" />
-                                          <JFXTextField fx:id="makeChocoTF" labelFloat="true" layoutX="15.0" layoutY="47.0" prefHeight="28.0" prefWidth="226.0" promptText="Make Chocolate Time (SECONDS)">
+                                          <JFXTextField fx:id="TableNumbersTimeTF" labelFloat="true" layoutX="14.0" layoutY="46.0" prefHeight="28.0" prefWidth="226.0" promptText="Number of Tables">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </JFXTextField>
-                                          <JFXTextField fx:id="makeCoffeeTF" labelFloat="true" layoutX="15.0" layoutY="94.0" prefHeight="28.0" prefWidth="225.0" promptText="Make Cappuccino Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="makeJuiceTF" labelFloat="true" layoutX="15.0" layoutY="138.0" prefHeight="28.0" prefWidth="227.0" promptText="Make Juice Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </Tab>
-                              <Tab text="CUSTOMER">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextField fx:id="numOfCustomerTF" labelFloat="true" layoutX="14.0" layoutY="39.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Customer Entering">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="drinkingTimeTF" labelFloat="true" layoutX="14.0" layoutY="81.0" prefHeight="28.0" prefWidth="199.0" promptText="Drinking Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXButton id="stop_spawn_button" fx:id="setCustomerButton" buttonType="RAISED" layoutX="14.0" layoutY="200.0" onAction="#setCustomerOnClick" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: lightblue;" text="SET" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </Tab>
-                              <Tab text="ASSISTANT">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextField fx:id="washGlassTimeTF" labelFloat="true" layoutX="14.0" layoutY="31.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Glass Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="washCupTimeTF" labelFloat="true" layoutX="14.0" layoutY="81.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Cup Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="washRoundsTimeTF" labelFloat="true" layoutX="14.0" layoutY="128.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Rounds Time (SECONDS)">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </JFXTextField>
-                                          <JFXButton id="stop_spawn_button" fx:id="setAssistantButton" buttonType="RAISED" layoutX="14.0" layoutY="182.0" onAction="#setAssistantOnClick" prefHeight="35.0" prefWidth="201.0" style="-fx-background-color: lightblue;" text="SET" />
+                                          <JFXButton id="stop_spawn_button" fx:id="setRestaurantButton" buttonType="RAISED" layoutX="14.0" layoutY="145.0" onAction="#setRestaurantOnClick" prefHeight="35.0" prefWidth="229.0" style="-fx-background-color: lightblue;" text="SET" />
                                        </children>
                                     </AnchorPane>
                                 </content>
@@ -205,6 +152,88 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab text="LANDLORD/BARMAID">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <JFXButton id="stop_spawn_button" fx:id="setLBButton" buttonType="RAISED" layoutX="14.0" layoutY="208.0" onAction="#setLBOnClick" prefHeight="35.0" prefWidth="229.0" style="-fx-background-color: lightblue;" text="SET" />
+                                          <JFXTextField fx:id="makeChocoTF" labelFloat="true" layoutX="15.0" layoutY="47.0" prefHeight="28.0" prefWidth="226.0" promptText="Make Chocolate Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="makeCoffeeTF" labelFloat="true" layoutX="16.0" layoutY="101.0" prefHeight="28.0" prefWidth="225.0" promptText="Make Cappuccino Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="makeJuiceTF" labelFloat="true" layoutX="15.0" layoutY="156.0" prefHeight="28.0" prefWidth="227.0" promptText="Make Juice Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab text="ASSISTANT">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <JFXTextField fx:id="washGlassTimeTF" labelFloat="true" layoutX="14.0" layoutY="31.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Glass Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="washCupTimeTF" labelFloat="true" layoutX="14.0" layoutY="81.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Cup Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="washRoundsTimeTF" labelFloat="true" layoutX="14.0" layoutY="136.0" prefHeight="28.0" prefWidth="199.0" promptText="Wash Rounds Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXButton id="stop_spawn_button" fx:id="setAssistantButton" buttonType="RAISED" layoutX="13.0" layoutY="192.0" onAction="#setAssistantOnClick" prefHeight="35.0" prefWidth="201.0" style="-fx-background-color: lightblue;" text="SET" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab text="CUSTOMER">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <JFXTextField fx:id="numOfCustomerTF" labelFloat="true" layoutX="14.0" layoutY="39.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Customer Entering">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="drinkingTimeTF" labelFloat="true" layoutX="14.0" layoutY="92.0" prefHeight="28.0" prefWidth="199.0" promptText="Drinking Time (SECONDS)">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXButton id="stop_spawn_button" fx:id="setCustomerButton" buttonType="RAISED" layoutX="14.0" layoutY="200.0" onAction="#setCustomerOnClick" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: lightblue;" text="SET" />
+                                          <JFXTextField fx:id="chocoRatioTF" labelFloat="true" layoutX="224.0" layoutY="39.0" prefHeight="28.0" prefWidth="199.0" promptText="Chocolate Ratio">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="cappucinoRatioTF" labelFloat="true" layoutX="224.0" layoutY="92.0" prefHeight="28.0" prefWidth="199.0" promptText="Cappucino Ratio">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField fx:id="juiceRatioTF" labelFloat="true" layoutX="224.0" layoutY="145.0" prefHeight="28.0" prefWidth="199.0" promptText="Juice Ratio">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
                                        </children>
                                     </AnchorPane>
                                 </content>
