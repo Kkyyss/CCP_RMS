@@ -48,7 +48,10 @@ public class CustomerProducer implements Runnable {
                     Customer customer = new Customer();
                     customer.setName("C" + (counter + 1));
                     
+                    // Number Of Drinks
+                    customer.setNumOfDrinks(conf.getNumberOfDrinks());
                     
+                    // Drinker type
                     int chocoRatio = conf.getChocolateType();
                     int cappucinoRatio = conf.getCappuccinoType();
                     int juiceRatio = conf.getJuiceType();

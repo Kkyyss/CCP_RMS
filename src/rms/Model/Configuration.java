@@ -25,6 +25,7 @@ public class Configuration {
     // Number of customer entering, drinking time and number of drinks, drinking type
     private AtomicInteger numberOfCustomerEntering = new AtomicInteger(0);
     private AtomicInteger drinkingTime = new AtomicInteger(0);
+    private AtomicInteger numberOfDrinks = new AtomicInteger(0);
     private AtomicInteger chocolateType = new AtomicInteger(0);
     private AtomicInteger cappuccinoType = new AtomicInteger(0);
     private AtomicInteger juiceType = new AtomicInteger(0);
@@ -47,6 +48,7 @@ public class Configuration {
     private AtomicInteger pickUpCupTime = new AtomicInteger(0);
     
     // Clock
+    private AtomicBoolean lastOrderNotify = new AtomicBoolean(false);
     private AtomicBoolean lastOrder = new AtomicBoolean(false);
     
     public Configuration() {}
@@ -57,6 +59,10 @@ public class Configuration {
     
     public int getDrinkingTime() {
         return drinkingTime.get();
+    }
+
+    public int getNumberOfDrinks() {
+        return numberOfDrinks.get();
     }
 
     public int getChocolateType() {
@@ -159,6 +165,10 @@ public class Configuration {
         return timeFetchJuice.get();
     }
 
+    public boolean getLastOrderNotify() {
+        return lastOrderNotify.get();
+    }
+
     public boolean getLastOrder() {
         return lastOrder.get();
     }
@@ -188,6 +198,16 @@ public class Configuration {
         while (true) {
             int existingNum = this.getDrinkingTime();
             if (this.drinkingTime.
+                    compareAndSet(existingNum, newNum)) {
+                return;
+            }
+        }
+    }
+
+    public void setNumberOfDrinks(int newNum) {
+        while (true) {
+            int existingNum = this.getNumberOfDrinks();
+            if (this.numberOfDrinks.
                     compareAndSet(existingNum, newNum)) {
                 return;
             }
@@ -444,6 +464,16 @@ public class Configuration {
         }
     }
 
+    public void setLastOrderNotify(boolean newBool) {
+        while (true) {
+            boolean existingBool = this.getLastOrderNotify();
+            if (this.lastOrderNotify.
+                    compareAndSet(existingBool, newBool)) {
+                return;
+            }
+        }
+    }
+    
     public void setLastOrder(boolean newBool) {
         while (true) {
             boolean existingBool = this.getLastOrder();
@@ -453,6 +483,4 @@ public class Configuration {
             }
         }
     }
-    
-    
 }

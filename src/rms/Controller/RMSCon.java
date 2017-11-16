@@ -120,6 +120,8 @@ public class RMSCon implements Initializable {
     private JFXTextField TableNumbersTimeTF;
     @FXML
     private JFXButton setRestaurantButton;
+    @FXML
+    private JFXTextField numOfDrinksTF;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -139,6 +141,7 @@ public class RMSCon implements Initializable {
         // Customer
         numOfCustomerTF.setText(Integer.toString(conf.getNumberOfCustomerEntering()));
         drinkingTimeTF.setText(Integer.toString(conf.getDrinkingTime()));
+        numOfDrinksTF.setText(Integer.toString(conf.getNumberOfDrinks()));
         chocoRatioTF.setText(Integer.toString(conf.getChocolateType()));
         cappucinoRatioTF.setText(Integer.toString(conf.getCappuccinoType()));
         juiceRatioTF.setText(Integer.toString(conf.getJuiceType()));
@@ -274,8 +277,8 @@ public class RMSCon implements Initializable {
 
     @FXML
     private void lastOrderOnClick(ActionEvent event) {
-        if (!conf.getLastOrder()) {
-            conf.setLastOrder(true);
+        if (!conf.getLastOrderNotify()) {
+            conf.setLastOrderNotify(true);
         }
     }
 
@@ -291,6 +294,11 @@ public class RMSCon implements Initializable {
             int value = Integer.parseInt(drinkingTimeTF.getText());
             
             conf.setDrinkingTime(value);
+        }
+        if (isValidInt(numOfDrinksTF.getText())) {
+            int value = Integer.parseInt(numOfDrinksTF.getText());
+            
+            conf.setNumberOfDrinks(value);
         }
         if (isValidInt(chocoRatioTF.getText())) {
             int value = Integer.parseInt(chocoRatioTF.getText());

@@ -234,6 +234,11 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </JFXTextField>
+                                          <JFXTextField fx:id="numOfDrinksTF" labelFloat="true" layoutX="14.0" layoutY="145.0" prefHeight="28.0" prefWidth="199.0" promptText="Number of Drinks">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </JFXTextField>
                                        </children>
                                     </AnchorPane>
                                 </content>

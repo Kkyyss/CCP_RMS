@@ -6,6 +6,7 @@ package rms.Consumer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import rms.Model.Customer;
+import static rms.Model.Customer.customerQueue;
 import rms.Model.Order;
 import rms.Model.Tables;
 import static rms.MyUtils.MyConfig.conf;
@@ -38,8 +39,9 @@ public class TablesConsumer implements Runnable {
                                 ((isFruitJuice) ? conf.getPickUpGlassTime() : conf.getPickUpCupTime()) + " seconds...");
                         TimeUnit.SECONDS.sleep(((isFruitJuice) ? conf.getPickUpGlassTime() : conf.getPickUpCupTime()));
          
-                        log(customer.getName() + " drinking " + customer.getOrder() + " for " + conf.getDrinkingTime() + " seconds...");
-                        TimeUnit.SECONDS.sleep(conf.getDrinkingTime());
+                        int drinkingTime = (conf.getLastOrder() && customer.getDrinkerType() == Order.Beverage.FRUIT_JUICE) ? 0 : conf.getDrinkingTime();
+                        log(customer.getName() + " drinking " + customer.getOrder() + " for " + drinkingTime + " seconds...");
+                        TimeUnit.SECONDS.sleep(drinkingTime);
                         
                         
                         // Increment cup or glass for that table.
@@ -63,7 +65,16 @@ public class TablesConsumer implements Runnable {
                             log(customer.getName() + " waiting to put down the " + ((isFruitJuice) ? "glass" : "cup"));
                             TimeUnit.SECONDS.sleep(1);
                         }
-
+                        // May go back queue to order again base on the number of drinks
+                        if (customer.getNumOfDrinks() > 0) {
+                            if (conf.getLastOrder() && customer.getDrinkerType() == Order.Beverage.FRUIT_JUICE) {
+                                customer.setNumOfDrinks(0);
+                            } else {
+                                customer.decreaseNumOfDrinks();
+                            }
+                            customerQueue.put(customer);
+                            log(customer.getName() + " back to the queue.");
+                        }
                     } catch (InterruptedException ex) {
                         errorLog(ex);
                     }

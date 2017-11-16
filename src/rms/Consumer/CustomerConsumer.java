@@ -44,21 +44,16 @@ public class CustomerConsumer implements Runnable {
         // Serving Customer
         while (true) {
             if (!closingTimeNotify) {
+                if (conf.getLastOrderNotify() && this.name == "Landlord") {
+                    log(this.name + " shout: LAST ORDER!!!");
+                    conf.setLastOrder(true);
+                }
                 serveCustomer();
-            }
-
-            if (conf.getLastOrder() && this.name == "Landlord") {
-                log(this.name + " shout: LAST ORDER!!!");
-                serveCustomer();
+            } else {
                 break;
             }
         }
-//        if (isClosingTime) {
-//            log(this.name + " " + this.scp.getName() + 
-//                    " is leaving...");
-//            barmaidLeaved = true;
-//            return;
-//        }        
+       
         log(this.name + " leaving.");
     }
     
@@ -70,9 +65,14 @@ public class CustomerConsumer implements Runnable {
                     "...");
      
             // Customer Ordering...
-            log(customer.getName() + " ordering for 2 seconds...");
-            TimeUnit.SECONDS.sleep(2);
-            customer.setOrder(order[rand.nextInt(order.length)]);
+            log(customer.getName() + " ordering for 1 seconds...");
+            TimeUnit.SECONDS.sleep(1);
+            
+            if (customer.isServed() && conf.getLastOrder() && customer.getDrinkerType() == Order.Beverage.FRUIT_JUICE) {
+                customer.setOrder(Order.Beverage.FRUIT_JUICE);
+            } else {
+                customer.setOrder(order[rand.nextInt(order.length)]);
+            }
             log(customer.getName() + " order " + customer.getOrder());
 
             // Go to cupboard obtain items -- 2 seconds.
@@ -87,6 +87,7 @@ public class CustomerConsumer implements Runnable {
 
             // Finally increment customer served.
             this.scp.addServed();
+            customer.setServed(true);
             log(this.name + " served " + this.scp.getServed() + " customer(s).");
 
             log(customer.getName() + " finding table...");
