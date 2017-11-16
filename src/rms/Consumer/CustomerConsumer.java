@@ -47,6 +47,7 @@ public class CustomerConsumer implements Runnable {
                 if (conf.getLastOrderNotify() && this.name == "Landlord") {
                     log(this.name + " shout: LAST ORDER!!!");
                     conf.setLastOrder(true);
+                    conf.setLastOrderNotify(false);
                 }
                 serveCustomer();
             } else {
