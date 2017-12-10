@@ -11,9 +11,13 @@ public class Customer {
     private Order.Beverage order = null;
     private Order.Beverage drinkerType = null;
     private int numOfDrinks = 0;
+    private long waitingTime;
     private boolean served = false;
     
     public static BlockingQueue<Customer> customerQueue = 
+            new LinkedBlockingQueue<Customer>();
+    
+    public static BlockingQueue<Customer> leavedCustomerQueue = 
             new LinkedBlockingQueue<Customer>();
     
     public void setName(String name) {

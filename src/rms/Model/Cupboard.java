@@ -8,8 +8,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import static rms.MyUtils.MyUtils.log;
 
 public class Cupboard extends ServingArea {
+    public static Cupboard cupboard = new Cupboard();
+    
     private int glass = 2;
     private int cup = 2;
+    
     private final ReentrantLock lockCups = new ReentrantLock();
     private final ReentrantLock lockGlass = new ReentrantLock();
     private final ReentrantLock lockIngredients = new ReentrantLock();
@@ -122,15 +125,20 @@ public class Cupboard extends ServingArea {
     
     public void returnGlass(int value) {
         lockGlass.lock();
-        this.glass += value;
-        
-        lockGlass.unlock();
+        try {
+            this.glass += value;
+        } finally {
+            lockGlass.unlock();
+        }
     }
     
     public void returnCup(int value) {
         lockCups.lock();
 
-        this.cup += value;
-        lockCups.unlock();
+        try {
+            this.cup += value;
+        } finally {
+            lockCups.unlock();
+        }
     }
 }

@@ -8,8 +8,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import static rms.MyUtils.MyUtils.log;
 
 public class JuiceFountainTap extends ServingArea {
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lockFill = new ReentrantLock();
     private final ReentrantLock lockTap = new ReentrantLock();
+    
+    public static JuiceFountainTap juiceFountainTap = new JuiceFountainTap();
     
     public JuiceFountainTap() {}
     
@@ -26,14 +28,14 @@ public class JuiceFountainTap extends ServingArea {
     }
     
     public void getFill(int seconds) {
-        lock.lock();
+        lockFill.lock();
         
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException ex) {
             log(ex);
         } finally {
-            lock.unlock();
+            lockFill.unlock();
         }
     }
 }

@@ -8,13 +8,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import rms.Model.Customer;
 import rms.Model.Order;
-import static rms.MyUtils.MyConfig.closingTimeNotify;
 import static rms.MyUtils.MyConfig.conf;
 import static rms.MyUtils.MyConfig.customerPauseSpawn;
 import static rms.MyUtils.MyUtils.log;
 
 public class CustomerProducer implements Runnable {
     private String name;
+    private boolean closingTime = false;
     private long counter = 0;
     private BlockingQueue<Customer> customerQueue;
     private Order.Beverage[] chocoCappuOrder = new Order.Beverage[] {
@@ -37,11 +37,15 @@ public class CustomerProducer implements Runnable {
         this.customerQueue = customerQueue;
     }
     
+    public void notifyClosingTime() {
+        this.closingTime = true;
+    }
+    
     @Override
     public void run() {
         try {
             while (true) {
-                if (!closingTimeNotify && 
+                if (!closingTime && 
                         !customerPauseSpawn &&
                         conf.getNumberOfCustomerEntering() > 0) {
                     int drinkType = 0;
@@ -106,7 +110,7 @@ public class CustomerProducer implements Runnable {
                                     " drinker " + customer.getName() + " entered...");
                     customerQueue.put(customer);
                 }
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep((long)(Math.random() * 5));
             }
         } catch (InterruptedException ex) {
             log(ex);

@@ -31,10 +31,25 @@ public class MyUtils {
             String time = dateFormat.format(date);
             String content = "Time " + time + "---> " + t;
 
-            System.out.println(content);
+            // System.out.println(content);
             mySanityLog.add(content + "\n");
         }
     }
+    
+    public static <T> void sanityLog(T t, boolean isTime) {
+        if (MyConfig.DEBUG) {
+            String content = t + "";
+            if (isTime) {
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                Date date = new Date();
+                String time = dateFormat.format(date);
+                content = "Time " + time + "---> " + content;
+            }
+
+            // System.out.println(content);
+            mySanityLog.add(content + "\n");
+        }
+    }    
     
     public static <T> void errorLog(T t) {
         if (MyConfig.DEBUG) {

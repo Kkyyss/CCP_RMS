@@ -11,15 +11,18 @@ import static rms.MyUtils.MyUtils.errorLog;
 
 public class Tables {
     public static ArrayList<Tables> tables = new ArrayList<Tables>();
-    // private final ReentrantLock lock = new ReentrantLock();
-    private AtomicInteger unit = new AtomicInteger(0);
+
+    private String name;
+    private AtomicInteger unit = new AtomicInteger(10);
     private AtomicInteger glasses = new AtomicInteger(0);
     private AtomicInteger cups = new AtomicInteger(0);
 
-    public BlockingQueue<Customer> tableCustomers = 
+    private BlockingQueue<Customer> tableCustomers = 
         new LinkedBlockingQueue<>();
     
-    public Tables() {}
+    public Tables(String name) {
+        this.name = name;
+    }
 
     public void setUnit(int newUnit) {
         while (true) {
@@ -40,6 +43,10 @@ public class Tables {
 
     public int getCups() {
         return cups.get();
+    }
+
+    public String getName() {
+        return name;
     }
     
     public void incrementGlasses() {
@@ -110,4 +117,7 @@ public class Tables {
         }
     }
 
+    public BlockingQueue<Customer> getTableCustomers() {
+        return tableCustomers;
+    }
 }

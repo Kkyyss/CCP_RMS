@@ -7,33 +7,22 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import rms.Consumer.ClosingConsumer;
+import rms.Consumer.TablesConsumer;
 import static rms.Model.Assistant.assistant;
 import static rms.Model.Barmaid.barmaid;
+import static rms.Model.Cupboard.cupboard;
+import rms.Model.Executor;
 import static rms.Model.Landlord.landlord;
 import rms.Model.Tables;
 import static rms.Model.Tables.tables;
-
-import static rms.MyUtils.MyConfig.closingTimeNotify;
 import static rms.MyUtils.MyConfig.conf;
-import static rms.MyUtils.MyConfig.cupboard;
 import static rms.MyUtils.MyConfig.customerPauseSpawn;
 import static rms.MyUtils.MyConfig.mySanityLog;
-import static rms.MyUtils.MyConfig.myTimeLog;
 import static rms.MyUtils.MyUtils.isValidInt;
 import static rms.MyUtils.MyUtils.log;
 import static rms.MyUtils.MyUtils.sanityLog;
@@ -41,23 +30,15 @@ import static rms.MyUtils.MyUtils.sanityLog;
 public class RMSCon implements Initializable {
 
     @FXML
-    private Label time_label;
-    @FXML
     private JFXButton playpauseCustomerButton;
     @FXML
     private JFXButton showDetailsButton;
     @FXML
     private JFXButton playpauseAssistantButton;
     @FXML
-    private JFXTextArea log_area;
-    @FXML
     private JFXTextArea sanity_check_area;
     @FXML
     private AnchorPane mainPane;
-    @FXML
-    private Label currentNumberOfCustomerLabel;
-    @FXML
-    private Label drinkingTimeLabel;
     @FXML
     private JFXTextField numOfCustomerTF;
     @FXML
@@ -122,16 +103,16 @@ public class RMSCon implements Initializable {
     private JFXButton setRestaurantButton;
     @FXML
     private JFXTextField numOfDrinksTF;
+    @FXML
+    private JFXTextField numOfCupsTF;
+    @FXML
+    private JFXTextField numOfGlassesTF;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         initPane();
-        initClock();
-        initStat();
-        initLogArea();
     }
     
-    private int prev_time_loc = 0;
     private int prev_sanity_loc = 0;
     
     private void initPane() {
@@ -152,6 +133,8 @@ public class RMSCon implements Initializable {
         washRoundsTimeTF.setText(Integer.toString(conf.getWashRoundsTime()));
         
         // Cupboard
+        numOfCupsTF.setText(Integer.toString(cupboard.getCup()));
+        numOfGlassesTF.setText(Integer.toString(cupboard.getGlass()));
         replaceGlassTimeTF.setText(Integer.toString(conf.getTimeReplaceGlass()));
         replaceCupTimeTF.setText(Integer.toString(conf.getTimeReplaceCup()));
         fetchGlassTimeTF.setText(Integer.toString(conf.getTimeFetchGlass()));
@@ -173,59 +156,15 @@ public class RMSCon implements Initializable {
         pickupGlassTimeTF.setText(Integer.toString(conf.getPickUpGlassTime()));
         pickupCupTimeTF.setText(Integer.toString(conf.getPickUpCupTime()));
     }
-    
-    private void initStat() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    currentNumberOfCustomerLabel.
-                            setText(Integer.toString(conf.getNumberOfCustomerEntering()));
-                    drinkingTimeLabel.
-                            setText(Integer.toString(conf.getDrinkingTime()));
-                });
-            }
-        }, 0, 1000);
-    }
-    
-    private void initClock() {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss a");
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    time_label.setText(dateFormat.format(new Date()));
-                });
-            }
-        }, 0, 1000);
-    }
-    
-    private void initLogArea() {
-        log_area.setEditable(false);
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    for (int i = prev_time_loc; i < myTimeLog.size(); i++) {
-                        log_area.appendText(myTimeLog.get(i));
-                        prev_time_loc++;
-                    }
-                });
-            }
-        }, 0, 1000);
-    }
 
     private void closingTimeOnClick(ActionEvent event) {
-        if (!closingTimeNotify) {
-            log("Closing time notify...");
-            closingTimeNotify = true;
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Thread closing = new Thread(new ClosingConsumer());
-            executor.execute(closing);
-        }
+//        if (!closingTimeNotify) {
+//            log("Closing time notify...");
+//            closingTimeNotify = true;
+//            ExecutorService executor = Executors.newSingleThreadExecutor();
+//            Thread closing = new Thread(new ClosingConsumer());
+//            executor.execute(closing);
+//        }
     }
 
     @FXML
@@ -243,6 +182,7 @@ public class RMSCon implements Initializable {
 
     @FXML
     private void showDetailsOnClick(ActionEvent event) {
+        sanityLog("======================================================", false);
         sanityLog("Available cups: " + cupboard.getCup());
         sanityLog("Available glass: " + cupboard.getGlass());
         
@@ -255,7 +195,7 @@ public class RMSCon implements Initializable {
         
         sanityLog("Landlord served: " + landlord.getServed() + " customers.");
         sanityLog("Barmaid served : " + barmaid.getServed() + " customers.");
-        
+        sanityLog("======================================================", false);
         for (int i = prev_sanity_loc; i < mySanityLog.size(); i++) {
             sanity_check_area.appendText(mySanityLog.get(i));
             prev_sanity_loc++;
@@ -340,6 +280,14 @@ public class RMSCon implements Initializable {
     @FXML
     private void setCupboardOnClick(ActionEvent event) {
         // Cupboard
+        if (isValidInt(numOfCupsTF.getText())) {
+            int value = Integer.parseInt(numOfCupsTF.getText());
+            cupboard.setCup(value);
+        }
+        if (isValidInt(numOfGlassesTF.getText())) {
+            int value = Integer.parseInt(numOfGlassesTF.getText());
+            cupboard.setGlass(value);
+        }
         if (isValidInt(replaceGlassTimeTF.getText())) {
             int value = Integer.parseInt(replaceGlassTimeTF.getText());
             
@@ -442,6 +390,15 @@ public class RMSCon implements Initializable {
         if (isValidInt(TableNumbersTimeTF.getText())) {
             int value = Integer.parseInt(TableNumbersTimeTF.getText());
             
+            if (value > tables.size()) {
+                for (int i = tables.size(); i < value; i++) {
+                    Tables t = new Tables((i + 1) + "");
+                    t.setUnit(conf.getTableCapacity());
+                    tables.add(t);
+                    Executor.tablesExecutor.execute(new Thread(new TablesConsumer("Tables" + (i + 1), tables.get(i))));
+                }
+
+            }
             conf.setNumberOfTables(value);
         }            
     }

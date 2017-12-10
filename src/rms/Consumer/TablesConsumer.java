@@ -27,7 +27,7 @@ public class TablesConsumer implements Runnable {
     public void run() {
         try {
             while (true) {
-                tableCustomers = t.tableCustomers;
+                tableCustomers = t.getTableCustomers();
                 Customer customer = tableCustomers.take();
                 new Thread(() -> {
                     try {
@@ -43,17 +43,16 @@ public class TablesConsumer implements Runnable {
                         log(customer.getName() + " drinking " + customer.getOrder() + " for " + drinkingTime + " seconds...");
                         TimeUnit.SECONDS.sleep(drinkingTime);
                         
-                        
                         // Increment cup or glass for that table.
                         int unit = (isFruitJuice) ? 1 : 2;
                         while (true) {
                             if (t.getUnit() - unit >= 0) {
                                 if (isFruitJuice) {
-                                    t.minusUnit(1);
+                                    t.minusUnit(unit);
                                     t.incrementGlasses();
                                 }
                                 else {
-                                    t.minusUnit(2);
+                                    t.minusUnit(unit);
                                     t.incrementCups();
                                 }
                                 log(customer.getName() + " put down " + 
@@ -74,6 +73,8 @@ public class TablesConsumer implements Runnable {
                             }
                             customerQueue.put(customer);
                             log(customer.getName() + " back to the queue.");
+                        } else {
+                            log(customer.getName() + " leaving restaurant...");
                         }
                     } catch (InterruptedException ex) {
                         errorLog(ex);

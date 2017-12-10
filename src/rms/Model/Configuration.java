@@ -10,11 +10,9 @@ public class Configuration {
     // Restaurant number of tables
     private AtomicInteger numberOfTables = new AtomicInteger(5);
     
-    // Cupboard inital number of glass/cup, time to fetch/replace a glass/cup, time to fetch the different ingredients
-    private AtomicInteger numberOfGlass = new AtomicInteger(0);
-    private AtomicInteger numberOfCup = new AtomicInteger(0);
-    private AtomicInteger timeFetchGlass = new AtomicInteger(0);
-    private AtomicInteger timeFetchCup = new AtomicInteger(0);
+    // Cupboard time to fetch/replace a glass/cup, time to fetch the different ingredients
+    private AtomicInteger timeFetchGlass = new AtomicInteger(1);
+    private AtomicInteger timeFetchCup = new AtomicInteger(1);
     private AtomicInteger timeReplaceGlass = new AtomicInteger(0);
     private AtomicInteger timeReplaceCup = new AtomicInteger(0);
     private AtomicInteger timeFetchCoffee = new AtomicInteger(0);
@@ -23,12 +21,12 @@ public class Configuration {
     private AtomicInteger timeFetchJuice = new AtomicInteger(0);
     
     // Number of customer entering, drinking time and number of drinks, drinking type
-    private AtomicInteger numberOfCustomerEntering = new AtomicInteger(0);
-    private AtomicInteger drinkingTime = new AtomicInteger(0);
-    private AtomicInteger numberOfDrinks = new AtomicInteger(0);
+    private AtomicInteger numberOfCustomerEntering = new AtomicInteger(10);
+    private AtomicInteger drinkingTime = new AtomicInteger(1);
+    private AtomicInteger numberOfDrinks = new AtomicInteger(4);
     private AtomicInteger chocolateType = new AtomicInteger(0);
     private AtomicInteger cappuccinoType = new AtomicInteger(0);
-    private AtomicInteger juiceType = new AtomicInteger(0);
+    private AtomicInteger juiceType = new AtomicInteger(1);
     
     // Landlord/Barmaid make drinks time
     private AtomicInteger makeChocolateTime = new AtomicInteger(0);
@@ -41,7 +39,7 @@ public class Configuration {
     private AtomicInteger washRoundsTime = new AtomicInteger(0);
     
     // Table capacity, time to put down/pick up a glass or a cup
-    private AtomicInteger tableCapacity = new AtomicInteger(0);
+    private AtomicInteger tableCapacity = new AtomicInteger(10);
     private AtomicInteger putDownGlassTime = new AtomicInteger(0);
     private AtomicInteger putDownCupTime = new AtomicInteger(0);
     private AtomicInteger pickUpGlassTime = new AtomicInteger(0);
@@ -109,14 +107,6 @@ public class Configuration {
         return numberOfTables.get();
     }
 
-    public int getNumberOfGlass() {
-        return numberOfGlass.get();
-    }
-
-    public int getNumberOfCup() {
-        return numberOfCup.get();
-    }
-
     public int getTimeFetchCoffee() {
         return timeFetchCoffee.get();
     }
@@ -172,7 +162,7 @@ public class Configuration {
     public boolean getLastOrder() {
         return lastOrder.get();
     }
-    
+        
     public void setNumberOfCustomerEntering(int newNum) {
         while (true) {
             int existingNum = this.getNumberOfCustomerEntering();
@@ -318,26 +308,6 @@ public class Configuration {
         while (true) {
             int existingNum = this.getNumberOfTables();
             if (this.numberOfTables.
-                    compareAndSet(existingNum, newNum)) {
-                return;
-            }
-        }
-    }
-
-    public void setNumberOfGlass(int newNums) {
-        while (true) {
-            int existingNum = this.getNumberOfGlass();
-            if (this.numberOfGlass.
-                    compareAndSet(existingNum, newNums)) {
-                return;
-            }
-        }
-    }
-
-    public void setNumberOfCup(int newNum) {
-        while (true) {
-            int existingNum = this.getNumberOfCup();
-            if (this.numberOfCup.
                     compareAndSet(existingNum, newNum)) {
                 return;
             }
